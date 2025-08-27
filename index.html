@@ -1,0 +1,758 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculateur de Quêtes de Pêche</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #2a2a2a;
+            color: white;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: #1a1a1a;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.8);
+        }
+        
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #4CAF50;
+            font-size: 2.5rem;
+        }
+        
+        .formula-info {
+            background: rgba(76, 175, 80, 0.2);
+            border: 2px solid #4CAF50;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .formula {
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: #4CAF50;
+            margin-bottom: 10px;
+        }
+        
+        .example {
+            font-size: 1rem;
+            color: #FFC107;
+            margin-bottom: 10px;
+        }
+        
+        .note {
+            font-size: 0.9rem;
+            color: #ccc;
+        }
+        
+        /* Tables styling */
+        .table-section {
+            margin-bottom: 40px;
+        }
+        
+        .section-title {
+            color: #FFC107;
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            font-weight: bold;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: #333;
+            border-radius: 8px;
+            overflow: hidden;
+            margin-bottom: 20px;
+        }
+        
+        th {
+            background: #444;
+            padding: 15px;
+            text-align: left;
+            font-weight: bold;
+            color: white;
+            border-bottom: 2px solid #555;
+        }
+        
+        td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #444;
+            vertical-align: middle;
+        }
+        
+        tr:hover {
+            background: rgba(255, 255, 255, 0.05);
+        }
+        
+        /* Item icons */
+        .item-icon {
+            width: 40px;
+            height: 40px;
+            display: inline-block;
+            margin-right: 12px;
+            vertical-align: middle;
+            border-radius: 8px;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.05));
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+            padding: 2px;
+        }
+        
+        .item-icon:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.3);
+            border-color: rgba(255, 255, 255, 0.5);
+        }
+        
+        /* Specific styling for fishing rods */
+        tr:has(.item-link[href*="Rod"]) .item-icon {
+            border-color: #4CAF50;
+            background: linear-gradient(135deg, rgba(76, 175, 80, 0.3), rgba(76, 175, 80, 0.1));
+            box-shadow: 0 4px 8px rgba(76, 175, 80, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+        }
+        
+        tr:has(.item-link[href*="Rod"]) .item-icon:hover {
+            box-shadow: 0 6px 12px rgba(76, 175, 80, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.3);
+            border-color: #66BB6A;
+        }
+        
+        /* Specific styling for baits */
+        tr:has(.item-link[href*="Bait"]) .item-icon {
+            border-color: #FF9800;
+            background: linear-gradient(135deg, rgba(255, 152, 0, 0.3), rgba(255, 152, 0, 0.1));
+            box-shadow: 0 4px 8px rgba(255, 152, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+        }
+        
+        tr:has(.item-link[href*="Bait"]) .item-icon:hover {
+            box-shadow: 0 6px 12px rgba(255, 152, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.3);
+            border-color: #FFB74D;
+        }
+        
+        /* Progress item icon - plus petite et sans bordure */
+        .progress-item-icon {
+            width: 24px;
+            height: 24px;
+            border-radius: 3px;
+            margin-right: 8px;
+            vertical-align: middle;
+        }
+        
+        /* Clickable item names */
+        .item-link {
+            color: #ffca2c;
+            text-decoration: none;
+            font-weight: bold;
+            transition: color 0.2s ease;
+            border-bottom: 1px solid transparent;
+        }
+        
+        .item-link:hover {
+            color: #90CAF9;
+            border-bottom: 1px solid #90CAF9;
+            text-shadow: 0 0 5px rgba(144, 202, 249, 0.5);
+        }
+        
+        /* Rarity colors */
+        .rare {
+            color: #9C27B0;
+            font-weight: bold;
+        }
+        
+        .uncommon {
+            color: #2196F3;
+            font-weight: bold;
+        }
+        
+        .legendary {
+            color: #FF6B6B;
+            font-weight: bold;
+        }
+        
+        /* Price styling */
+        .price {
+            color: #4CAF50;
+            font-weight: bold;
+        }
+        
+        .price::before {
+            content: "$";
+        }
+        
+        /* Sea requirement */
+        .sea {
+            color: #FFC107;
+        }
+        
+        /* Trust level (quests) */
+        .trust {
+            color: #FF9800;
+            font-weight: bold;
+            text-align: center;
+        }
+        
+        /* Materials */
+        .materials {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .material-item {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 0.9rem;
+        }
+        
+        .material-icon {
+            width: 20px;
+            height: 20px;
+            border-radius: 3px;
+        }
+        
+        /* Calculator */
+        .calculator {
+            margin-top: 30px;
+            padding: 25px;
+            background: rgba(255, 193, 7, 0.1);
+            border: 2px solid #FFC107;
+            border-radius: 10px;
+        }
+        
+        .calculator h3 {
+            color: #FFC107;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+        
+        .calc-input {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+        
+        .calc-input label {
+            min-width: 250px;
+            font-weight: bold;
+        }
+        
+        .calc-input input, .calc-input select {
+            flex: 1;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            background: rgba(255, 255, 255, 0.9);
+            color: #333;
+            font-size: 1rem;
+        }
+        
+        .calc-result {
+            text-align: center;
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #4CAF50;
+            margin-top: 15px;
+            padding: 15px;
+            background: rgba(76, 175, 80, 0.2);
+            border-radius: 5px;
+        }
+        
+        .progress-display {
+            margin-top: 20px;
+            padding: 20px;
+            background: rgba(33, 150, 243, 0.1);
+            border: 2px solid #2196F3;
+            border-radius: 10px;
+        }
+        
+        .progress-item {
+            margin-bottom: 15px;
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 5px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .progress-item-left {
+            display: flex;
+            align-items: center;
+        }
+        
+        .progress-bar {
+            width: 200px;
+            height: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            overflow: hidden;
+            margin-left: 15px;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #4CAF50, #8BC34A);
+            transition: width 0.3s ease;
+            border-radius: 10px;
+        }
+        
+        @media (max-width: 768px) {
+            table {
+                font-size: 0.9rem;
+            }
+            
+            th, td {
+                padding: 8px;
+            }
+            
+            .calc-input {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            
+            .calc-input label {
+                min-width: auto;
+            }
+            
+            .progress-bar {
+                width: 150px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎣 Calculateur de Quêtes de Pêche</h1>
+        
+        <div class="formula-info">
+            <div class="formula">Les quêtes = Le niveau de confiance nécessaire</div>
+            <div class="example">Exemple : si la récompense est de 1700$, cela signifie qu'ils ont déjà accompli 7 quêtes. Ceci ne s'applique pas aux quêtes « Attraper un poisson commun/peu commun/rare/épique/mythique » et « Attraper n'importe quel poisson en 2 minutes », car leurs récompenses restent inchangées.</div>
+            <div class="note">(notez que les quêtes ne s'appliquent pas au « système de vérification » supérieur qui compte également comme exigence de quête pour débloquer des appâts ou des cannes à pêche.) En bref, toutes les quêtes terminées comptent.</div>
+        </div>
+
+        <div class="table-section">
+            <div class="section-title">Canne à Pêche</div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Fishing Rod</th>
+                        <th>Rareté</th>
+                        <th>Prix / Matériaux</th>
+                        <th>Mer</th>
+                        <th>Confiance Nécessaire</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            <div style="display: flex; align-items: center;">
+                                <img src="items/Gold_Rod.webp" class="item-icon" alt="Gold Rod" onerror="this.style.display='none'">
+                                <a href="https://blox-fruits.fandom.com/wiki/Gold_Rod" class="item-link" target="_blank">Gold Rod</a>
+                            </div>
+                        </td>
+                        <td class="uncommon">Uncommon</td>
+                        <td>
+                            <div class="materials">
+                                <span class="price">500,000</span>
+                                <div class="material-item">
+                                    <img src="items/Wooden_Plank.webp" class="material-icon" alt="Wood" onerror="this.style.display='none'">
+                                    <span>4</span>
+                                </div>
+                                <div class="material-item">
+                                    <img src="items/Scrap_Metal.webp" class="material-icon" alt="Stone" onerror="this.style.display='none'">
+                                    <span>3</span>
+                                </div>
+                            </div>
+                        </td>
+                        <td class="sea">First Sea</td>
+                        <td class="trust">10</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div style="display: flex; align-items: center;">
+                                <img src="items/Shark_Rod.webp" class="item-icon" alt="Shark Rod" onerror="this.style.display='none'">
+                                <a href="https://blox-fruits.fandom.com/wiki/Shark_Rod" class="item-link" target="_blank">Shark Rod</a>
+                            </div>
+                        </td>
+                        <td class="uncommon">Uncommon</td>
+                        <td>
+                            <div class="materials">
+                                <span class="price">1,000</span>
+                                <div class="material-item">
+                                    <img src="items/Meteorite.webp" class="material-icon" alt="Demonic Wisp" onerror="this.style.display='none'">
+                                    <span>1</span>
+                                </div>
+								<div class="material-item">
+                                    <img src="items/FragmentIcon.webp" class="material-icon" alt="Wood" onerror="this.style.display='none'">
+                                    <span>1,000</span>
+                                </div>
+                                <div class="material-item">
+                                    <img src="items/VampireFang.webp" class="material-icon" alt="Mutant Tooth" onerror="this.style.display='none'">
+                                    <span>5</span>
+                                </div>
+                                <div class="material-item">
+                                    <img src="items/Wooden_Plank.webp" class="material-icon" alt="Wood" onerror="this.style.display='none'">
+                                    <span>7</span>
+                                </div>
+                            </div>
+                        </td>
+                        <td class="sea">Second Sea</td>
+                        <td class="trust">15</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div style="display: flex; align-items: center;">
+                                <img src="items/Shell_Rod.webp" class="item-icon" alt="Shell Rod" onerror="this.style.display='none'">
+                                <a href="https://blox-fruits.fandom.com/wiki/Shell_Rod" class="item-link" target="_blank">Shell Rod</a>
+                            </div>
+                        </td>
+                        <td class="rare">Rare</td>
+                        <td>
+                            <div class="materials">
+                                <span class="price">2,000</span>
+                                <div class="material-item">
+                                    <img src="items/Mutant_Tooth.webp" class="material-icon" alt="Yeti Fur" onerror="this.style.display='none'">
+                                    <span>2</span>
+                                </div>
+								<div class="material-item">
+                                    <img src="items/FragmentIcon.webp" class="material-icon" alt="Wood" onerror="this.style.display='none'">
+                                    <span>2,000</span>
+                                </div>
+                                <div class="material-item">
+                                    <img src="items/Mystic_Droplet.webp" class="material-icon" alt="Mystic Droplet" onerror="this.style.display='none'">
+                                    <span>8</span>
+                                </div>
+                                <div class="material-item">
+                                    <img src="items/Wooden_Plank.webp" class="material-icon" alt="Wood" onerror="this.style.display='none'">
+                                    <span>10</span>
+                                </div>
+								
+                                </div>
+                            </div>
+                        </td>
+                        <td class="sea">Third Sea</td>
+                        <td class="trust">50</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="table-section">
+            <div class="section-title">Appât 🎣</div>
+            <p style="margin-bottom: 15px; color: #ccc;">Il existe six appâts qui peuvent être fabriqués à partir de l'Angler :</p>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Bait</th>
+                        <th>Rareté</th>
+                        <th>Quantité</th>
+                        <th>Prix / Matériaux</th>
+                        <th>Mer</th>
+                        <th>Confiance Nécessaire</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            <div style="display: flex; align-items: center;">
+                                <img src="items/Kelp_Bait.webp" class="item-icon" alt="Kelp Bait" onerror="this.style.display='none'">
+                                <a href="https://blox-fruits.fandom.com/wiki/Kelp_Bait" class="item-link" target="_blank">Kelp Bait</a>
+                            </div>
+                        </td>
+                        <td class="uncommon">Uncommon</td>
+                        <td>10</td>
+                        <td class="price">12,000</td>
+                        <td class="sea">First Sea</td>
+                        <td class="trust">3</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div style="display: flex; align-items: center;">
+                                <img src="items/Good_Bait.webp" class="item-icon" alt="Good Bait" onerror="this.style.display='none'">
+                                <a href="https://blox-fruits.fandom.com/wiki/Good_Bait" class="item-link" target="_blank">Good Bait</a>
+                            </div>
+                        </td>
+                        <td class="uncommon">Uncommon</td>
+                        <td>10</td>
+                        <td class="price">8,000</td>
+                        <td class="sea">First Sea</td>
+                        <td class="trust">15</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div style="display: flex; align-items: center;">
+                                <img src="items/Abyssal_Bait.webp" class="item-icon" alt="Abyssal Bait" onerror="this.style.display='none'">
+                                <a href="https://blox-fruits.fandom.com/wiki/Abyssal_Bait" class="item-link" target="_blank">Abyssal Bait</a>
+                            </div>
+                        </td>
+                        <td class="legendary">Legendary</td>
+                        <td>10</td>
+                        <td>
+                            <div class="materials">
+                                <span class="price">25,000</span>
+                                <div class="material-item">
+                                    <img src="items/DemonicWisp.webp" class="material-icon" alt="Demonic Wisp" onerror="this.style.display='none'">
+                                    <span>1</span>
+                                </div>
+                            </div>
+                        </td>
+                        <td class="sea">Second Sea</td>
+                        <td class="trust">10</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div style="display: flex; align-items: center;">
+                                <img src="items/Frozen_Bait.webp" class="item-icon" alt="Frozen Bait" onerror="this.style.display='none'">
+                                <a href="https://blox-fruits.fandom.com/wiki/Frozen_Bait" class="item-link" target="_blank">Frozen Bait</a>
+                            </div>
+                        </td>
+                        <td class="rare">Rare</td>
+                        <td>10</td>
+                        <td>
+                            <div class="materials">
+                                <span class="price">36,000</span>
+                                <div class="material-item">
+                                    <img src="items/YetiFur.webp" class="material-icon" alt="Yeti Fur" onerror="this.style.display='none'">
+                                    <span>1</span>
+                                </div>
+                            </div>
+                        </td>
+                        <td class="sea">Second Sea</td>
+                        <td class="trust">20</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div style="display: flex; align-items: center;">
+                                <img src="items/Epic_Bait.webp" class="item-icon" alt="Epic Bait" onerror="this.style.display='none'">
+                                <a href="https://blox-fruits.fandom.com/wiki/Epic_Bait" class="item-link" target="_blank">Epic Bait</a>
+                            </div>
+                        </td>
+                        <td class="legendary">Legendary</td>
+                        <td>10</td>
+                        <td>
+                            <div class="materials">
+                                <span class="price">50,000</span>
+                                <div class="material-item">
+                                    <img src="items/Terror_Eyes.webp" class="material-icon" alt="Terror Eyes" onerror="this.style.display='none'">
+                                    <span>1</span>
+                                </div>
+                            </div>
+                        </td>
+                        <td class="sea">Third Sea</td>
+                        <td class="trust">10</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div style="display: flex; align-items: center;">
+                                <img src="items/Carnivore_Bait.webp" class="item-icon" alt="Carnivore Bait" onerror="this.style.display='none'">
+                                <a href="https://blox-fruits.fandom.com/wiki/Carnivore_Bait" class="item-link" target="_blank">Carnivore Bait</a>
+                            </div>
+                        </td>
+                        <td class="rare">Rare</td>
+                        <td>10</td>
+                        <td>
+                            <div class="materials">
+                                <span class="price">60,000</span>
+                                <div class="material-item">
+                                    <img src="items/DragonScale.webp" class="material-icon" alt="Yeti Fur" onerror="this.style.display='none'">
+                                    <span>1</span>
+                                </div>
+                            </div>
+                        </td>
+                        <td class="sea">Third Sea</td>
+                        <td class="trust">15</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="calculator">
+            <h3>🧮 Calculateur d'XP de Quête</h3>
+            
+            <!-- Quest XP Calculator -->
+            <div style="padding: 20px; background: rgba(76, 175, 80, 0.1); border: 2px solid #4CAF50; border-radius: 8px;">
+                <h4 style="color: #4CAF50; margin-bottom: 15px; text-align: center;">Calculer l'XP de Quête</h4>
+                <div class="calc-input">
+                    <label for="quest-reward">Récompense de quête en argent ($) :</label>
+                    <input type="number" id="quest-reward" placeholder="Ex: 1700" min="1000">
+                </div>
+                <div class="calc-input">
+                    <label for="sea-select">Choisir votre mer actuelle :</label>
+                    <select id="sea-select">
+                        <option value="">-- Sélectionner une mer --</option>
+                        <option value="first">First Sea</option>
+                        <option value="second">Second Sea</option>
+                        <option value="third">Third Sea</option>
+                    </select>
+                </div>
+                <div style="text-align: center; font-size: 1rem; margin-bottom: 10px; color: #4CAF50;">
+                    Formule : (récompense - 1000) / 100
+                </div>
+                <div class="calc-result" id="xp-result">
+                    Entrez votre récompense de quête pour calculer les quêtes terminées
+                </div>
+                <div style="margin-top: 10px; font-size: 0.9rem; color: #ccc; text-align: center;">
+                    Ne s'applique pas aux quêtes "Attraper un poisson" et "Attraper n'importe quel poisson en 2 minutes" car leurs récompenses restent inchangées
+                </div>
+            </div>
+
+            <div class="progress-display" id="progress-display" style="display: none;">
+                <h4 style="color: #2196F3; margin-bottom: 15px; text-align: center;">Progrès par Mer</h4>
+                <div id="progress-items"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const questRewardInput = document.getElementById('quest-reward');
+        const seaSelect = document.getElementById('sea-select');
+        const xpResultDiv = document.getElementById('xp-result');
+        const progressDisplay = document.getElementById('progress-display');
+        const progressItems = document.getElementById('progress-items');
+
+        // Utilisation de variables au lieu de localStorage
+        let savedData = {
+            questReward: '',
+            selectedSea: ''
+        };
+
+        // Charger les données sauvegardées (en mémoire)
+        function loadSavedData() {
+            if (savedData.questReward) {
+                questRewardInput.value = savedData.questReward;
+            }
+            if (savedData.selectedSea) {
+                seaSelect.value = savedData.selectedSea;
+            }
+            
+            // Recalculer si on a des données sauvegardées
+            if (savedData.questReward && parseInt(savedData.questReward) >= 1000) {
+                updateCalculator();
+                updateProgress();
+            }
+        }
+
+        // Sauvegarder les données (en mémoire)
+        function saveData() {
+            savedData.questReward = questRewardInput.value;
+            savedData.selectedSea = seaSelect.value;
+        }
+
+        const items = {
+            first: [
+                { name: 'Kelp Bait', trust: 3, type: 'bait', image: 'items/Kelp_Bait.webp' },
+                { name: 'Gold Rod', trust: 10, type: 'rod', image: 'items/Gold_Rod.webp' },
+                { name: 'Good Bait', trust: 15, type: 'bait', image: 'items/Good_Bait.webp' }
+            ],
+            second: [
+                { name: 'Abyssal Bait', trust: 10, type: 'bait', image: 'items/Abyssal_Bait.webp' },
+                { name: 'Shark Rod', trust: 15, type: 'rod', image: 'items/Shark_Rod.webp' },
+                { name: 'Frozen Bait', trust: 20, type: 'bait', image: 'items/Frozen_Bait.webp' }
+            ],
+            third: [
+                { name: 'Epic Bait', trust: 10, type: 'bait', image: 'items/Epic_Bait.webp' },
+                { name: 'Carnivore Bait', trust: 15, type: 'bait', image: 'items/Carnivore_Bait.webp' },
+                { name: 'Shell Rod', trust: 50, type: 'rod', image: 'items/Shell_Rod.webp' }
+            ]
+        };
+
+        function updateProgress() {
+            const reward = parseInt(questRewardInput.value);
+            const selectedSea = seaSelect.value;
+            
+            if (reward && reward >= 1000 && selectedSea) {
+                const quests = Math.floor((reward - 1000) / 100);
+                progressDisplay.style.display = 'block';
+                
+                const seaItems = items[selectedSea];
+                progressItems.innerHTML = '';
+                
+                seaItems.forEach(item => {
+                    const progressItem = document.createElement('div');
+                    progressItem.className = 'progress-item';
+                    
+                    const progress = Math.min(quests, item.trust);
+                    const percentage = (progress / item.trust) * 100;
+                    const isCompleted = progress >= item.trust;
+                    
+                    progressItem.innerHTML = `
+                        <div class="progress-item-left">
+                            <img src="${item.image}" class="progress-item-icon" alt="${item.name}" onerror="this.style.display='none'">
+                            <div>
+                                <strong>${item.name}</strong>
+                                <span style="margin-left: 10px; color: ${isCompleted ? '#4CAF50' : '#FFC107'};">
+                                    ${progress}/${item.trust} ${isCompleted ? '✅' : ''}
+                                </span>
+                            </div>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: ${percentage}%; background: ${isCompleted ? '#4CAF50' : '#FFC107'};"></div>
+                        </div>
+                    `;
+                    
+                    progressItems.appendChild(progressItem);
+                });
+                
+                // Sauvegarder les données
+                saveData();
+            } else {
+                progressDisplay.style.display = 'none';
+            }
+        }
+
+        function updateCalculator() {
+            const reward = parseInt(questRewardInput.value);
+            
+            if (reward && reward >= 1000) {
+                const quests = (reward - 1000) / 100;
+                xpResultDiv.innerHTML = `
+                    <div>Vous avez terminé <strong>${Math.floor(quests)} quêtes</strong></div>
+                    ${quests % 1 !== 0 ? `<div style="margin-top: 5px; font-size: 0.9rem; color: #FFC107;">Progression partielle : ${((quests % 1) * 100).toFixed(0)}% vers la prochaine quête</div>` : ''}
+                `;
+            } else if (reward < 1000 && reward > 0) {
+                xpResultDiv.innerHTML = '<div style="color: #f44336;">La récompense doit être d\'au moins $1000 pour le calcul</div>';
+            } else {
+                xpResultDiv.innerHTML = 'Entrez votre récompense de quête pour calculer les quêtes terminées';
+            }
+        }
+        
+        // XP Calculator avec sauvegarde
+        questRewardInput.addEventListener('input', function() {
+            updateCalculator();
+            updateProgress();
+            
+            // Sauvegarder immédiatement quand l'utilisateur tape
+            saveData();
+        });
+
+        seaSelect.addEventListener('change', function() {
+            updateProgress();
+            saveData();
+        });
+
+        // Charger les données au chargement de la page
+        window.addEventListener('load', loadSavedData);
+    </script>
+</body>
+</html>
