@@ -102,47 +102,13 @@
         
         /* Item icons */
         .item-icon {
-            width: 40px;
-            height: 40px;
+            width: 32px;
+            height: 32px;
             display: inline-block;
-            margin-right: 12px;
+            margin-right: 10px;
             vertical-align: middle;
-            border-radius: 8px;
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.05));
-            border: 2px solid rgba(255, 255, 255, 0.3);
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.2);
-            transition: all 0.3s ease;
-            padding: 2px;
-        }
-        
-        .item-icon:hover {
-            transform: scale(1.1);
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.3);
-            border-color: rgba(255, 255, 255, 0.5);
-        }
-        
-        /* Specific styling for fishing rods */
-        tr:has(.item-link[href*="Rod"]) .item-icon {
-            border-color: #4CAF50;
-            background: linear-gradient(135deg, rgba(76, 175, 80, 0.3), rgba(76, 175, 80, 0.1));
-            box-shadow: 0 4px 8px rgba(76, 175, 80, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.2);
-        }
-        
-        tr:has(.item-link[href*="Rod"]) .item-icon:hover {
-            box-shadow: 0 6px 12px rgba(76, 175, 80, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.3);
-            border-color: #66BB6A;
-        }
-        
-        /* Specific styling for baits */
-        tr:has(.item-link[href*="Bait"]) .item-icon {
-            border-color: #FF9800;
-            background: linear-gradient(135deg, rgba(255, 152, 0, 0.3), rgba(255, 152, 0, 0.1));
-            box-shadow: 0 4px 8px rgba(255, 152, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.2);
-        }
-        
-        tr:has(.item-link[href*="Bait"]) .item-icon:hover {
-            box-shadow: 0 6px 12px rgba(255, 152, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.3);
-            border-color: #FFB74D;
+            border-radius: 4px;
+            background: rgba(255, 255, 255, 0.1);
         }
         
         /* Progress item icon - plus petite et sans bordure */
@@ -193,6 +159,12 @@
         
         .price::before {
             content: "$";
+        }
+        
+        /* Fragment styling */
+        .fragments {
+            color: #b27aff;
+            font-weight: bold;
         }
         
         /* Sea requirement */
@@ -376,12 +348,16 @@
                             <div class="materials">
                                 <span class="price">500,000</span>
                                 <div class="material-item">
-                                    <img src="items/Wooden_Plank.webp" class="material-icon" alt="Wood" onerror="this.style.display='none'">
-                                    <span>4</span>
+                                    <a href="https://blox-fruits.fandom.com/wiki/Wooden_Plank" target="_blank" style="display: flex; align-items: center; gap: 5px; text-decoration: none; color: inherit;">
+                                        <img src="items/Wooden_Plank.webp" class="material-icon" alt="Wood" onerror="this.style.display='none'">
+                                        <span>4</span>
+                                    </a>
                                 </div>
                                 <div class="material-item">
-                                    <img src="items/Scrap_Metal.webp" class="material-icon" alt="Stone" onerror="this.style.display='none'">
-                                    <span>3</span>
+                                    <a href="https://blox-fruits.fandom.com/wiki/Scrap_Metal" target="_blank" style="display: flex; align-items: center; gap: 5px; text-decoration: none; color: inherit;">
+                                        <img src="items/Scrap_Metal.webp" class="material-icon" alt="Scrap Metal" onerror="this.style.display='none'">
+                                        <span>3</span>
+                                    </a>
                                 </div>
                             </div>
                         </td>
@@ -398,22 +374,27 @@
                         <td class="uncommon">Uncommon</td>
                         <td>
                             <div class="materials">
-                                <span class="price">1,000</span>
                                 <div class="material-item">
-                                    <img src="items/Meteorite.webp" class="material-icon" alt="Demonic Wisp" onerror="this.style.display='none'">
-                                    <span>1</span>
-                                </div>
-								<div class="material-item">
-                                    <img src="items/FragmentIcon.webp" class="material-icon" alt="Wood" onerror="this.style.display='none'">
-                                    <span>1,000</span>
+                                    <img src="items/FragmentIcon.webp" class="material-icon" alt="Fragments" onerror="this.style.display='none'">
+                                    <span class="fragments">1,000</span>
                                 </div>
                                 <div class="material-item">
-                                    <img src="items/VampireFang.webp" class="material-icon" alt="Mutant Tooth" onerror="this.style.display='none'">
-                                    <span>5</span>
+                                    <a href="https://blox-fruits.fandom.com/wiki/Meteorite" target="_blank" style="display: flex; align-items: center; gap: 5px; text-decoration: none; color: inherit;">
+                                        <img src="items/Meteorite.webp" class="material-icon" alt="Meteorite" onerror="this.style.display='none'">
+                                        <span>1</span>
+                                    </a>
                                 </div>
                                 <div class="material-item">
-                                    <img src="items/Wooden_Plank.webp" class="material-icon" alt="Wood" onerror="this.style.display='none'">
-                                    <span>7</span>
+                                    <a href="https://blox-fruits.fandom.com/wiki/Vampire_Fang" target="_blank" style="display: flex; align-items: center; gap: 5px; text-decoration: none; color: inherit;">
+                                        <img src="items/VampireFang.webp" class="material-icon" alt="Vampire Fang" onerror="this.style.display='none'">
+                                        <span>5</span>
+                                    </a>
+                                </div>
+                                <div class="material-item">
+                                    <a href="https://blox-fruits.fandom.com/wiki/Wooden_Plank" target="_blank" style="display: flex; align-items: center; gap: 5px; text-decoration: none; color: inherit;">
+                                        <img src="items/Wooden_Plank.webp" class="material-icon" alt="Wood" onerror="this.style.display='none'">
+                                        <span>7</span>
+                                    </a>
                                 </div>
                             </div>
                         </td>
@@ -430,24 +411,27 @@
                         <td class="rare">Rare</td>
                         <td>
                             <div class="materials">
-                                <span class="price">2,000</span>
                                 <div class="material-item">
-                                    <img src="items/Mutant_Tooth.webp" class="material-icon" alt="Yeti Fur" onerror="this.style.display='none'">
-                                    <span>2</span>
-                                </div>
-								<div class="material-item">
-                                    <img src="items/FragmentIcon.webp" class="material-icon" alt="Wood" onerror="this.style.display='none'">
-                                    <span>2,000</span>
+                                    <img src="items/FragmentIcon.webp" class="material-icon" alt="Fragments" onerror="this.style.display='none'">
+                                    <span class="fragments">2,000</span>
                                 </div>
                                 <div class="material-item">
-                                    <img src="items/Mystic_Droplet.webp" class="material-icon" alt="Mystic Droplet" onerror="this.style.display='none'">
-                                    <span>8</span>
+                                    <a href="https://blox-fruits.fandom.com/wiki/Mutant_Tooth" target="_blank" style="display: flex; align-items: center; gap: 5px; text-decoration: none; color: inherit;">
+                                        <img src="items/Mutant_Tooth.webp" class="material-icon" alt="Mutant Tooth" onerror="this.style.display='none'">
+                                        <span>2</span>
+                                    </a>
                                 </div>
                                 <div class="material-item">
-                                    <img src="items/Wooden_Plank.webp" class="material-icon" alt="Wood" onerror="this.style.display='none'">
-                                    <span>10</span>
+                                    <a href="https://blox-fruits.fandom.com/wiki/Mystic_Droplet" target="_blank" style="display: flex; align-items: center; gap: 5px; text-decoration: none; color: inherit;">
+                                        <img src="items/Mystic_Droplet.webp" class="material-icon" alt="Mystic Droplet" onerror="this.style.display='none'">
+                                        <span>8</span>
+                                    </a>
                                 </div>
-								
+                                <div class="material-item">
+                                    <a href="https://blox-fruits.fandom.com/wiki/Wooden_Plank" target="_blank" style="display: flex; align-items: center; gap: 5px; text-decoration: none; color: inherit;">
+                                        <img src="items/Wooden_Plank.webp" class="material-icon" alt="Wood" onerror="this.style.display='none'">
+                                        <span>10</span>
+                                    </a>
                                 </div>
                             </div>
                         </td>
@@ -512,8 +496,10 @@
                             <div class="materials">
                                 <span class="price">25,000</span>
                                 <div class="material-item">
-                                    <img src="items/DemonicWisp.webp" class="material-icon" alt="Demonic Wisp" onerror="this.style.display='none'">
-                                    <span>1</span>
+                                    <a href="https://blox-fruits.fandom.com/wiki/Demonic_Wisp" target="_blank" style="display: flex; align-items: center; gap: 5px; text-decoration: none; color: inherit;">
+                                        <img src="items/DemonicWisp.webp" class="material-icon" alt="Demonic Wisp" onerror="this.style.display='none'">
+                                        <span>1</span>
+                                    </a>
                                 </div>
                             </div>
                         </td>
@@ -533,8 +519,10 @@
                             <div class="materials">
                                 <span class="price">36,000</span>
                                 <div class="material-item">
-                                    <img src="items/YetiFur.webp" class="material-icon" alt="Yeti Fur" onerror="this.style.display='none'">
-                                    <span>1</span>
+                                    <a href="https://blox-fruits.fandom.com/wiki/Yeti_Fur" target="_blank" style="display: flex; align-items: center; gap: 5px; text-decoration: none; color: inherit;">
+                                        <img src="items/YetiFur.webp" class="material-icon" alt="Yeti Fur" onerror="this.style.display='none'">
+                                        <span>1</span>
+                                    </a>
                                 </div>
                             </div>
                         </td>
@@ -554,8 +542,10 @@
                             <div class="materials">
                                 <span class="price">50,000</span>
                                 <div class="material-item">
-                                    <img src="items/Terror_Eyes.webp" class="material-icon" alt="Terror Eyes" onerror="this.style.display='none'">
-                                    <span>1</span>
+                                    <a href="https://blox-fruits.fandom.com/wiki/Terror_Eyes" target="_blank" style="display: flex; align-items: center; gap: 5px; text-decoration: none; color: inherit;">
+                                        <img src="items/Terror_Eyes.webp" class="material-icon" alt="Terror Eyes" onerror="this.style.display='none'">
+                                        <span>1</span>
+                                    </a>
                                 </div>
                             </div>
                         </td>
@@ -575,8 +565,10 @@
                             <div class="materials">
                                 <span class="price">60,000</span>
                                 <div class="material-item">
-                                    <img src="items/DragonScale.webp" class="material-icon" alt="Yeti Fur" onerror="this.style.display='none'">
-                                    <span>1</span>
+                                    <a href="https://blox-fruits.fandom.com/wiki/Dragon_Scale" target="_blank" style="display: flex; align-items: center; gap: 5px; text-decoration: none; color: inherit;">
+                                        <img src="items/DragonScale.webp" class="material-icon" alt="Dragon Scale" onerror="this.style.display='none'">
+                                        <span>1</span>
+                                    </a>
                                 </div>
                             </div>
                         </td>
