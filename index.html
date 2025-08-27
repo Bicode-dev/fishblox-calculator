@@ -60,6 +60,93 @@
             color: #ccc;
         }
         
+        /* Calculator styling */
+        .calculator {
+            margin-bottom: 40px;
+            padding: 25px;
+            background: rgba(255, 193, 7, 0.1);
+            border: 2px solid #FFC107;
+            border-radius: 10px;
+        }
+        
+        .calculator h3 {
+            color: #FFC107;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+        
+        .calc-input {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+        
+        .calc-input label {
+            min-width: 250px;
+            font-weight: bold;
+        }
+        
+        .calc-input input, .calc-input select {
+            flex: 1;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            background: rgba(255, 255, 255, 0.9);
+            color: #333;
+            font-size: 1rem;
+        }
+        
+        .calc-result {
+            text-align: center;
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #4CAF50;
+            margin-top: 15px;
+            padding: 15px;
+            background: rgba(76, 175, 80, 0.2);
+            border-radius: 5px;
+        }
+        
+        .progress-display {
+            margin-top: 20px;
+            padding: 20px;
+            background: rgba(33, 150, 243, 0.1);
+            border: 2px solid #2196F3;
+            border-radius: 10px;
+        }
+        
+        .progress-item {
+            margin-bottom: 15px;
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 5px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .progress-item-left {
+            display: flex;
+            align-items: center;
+        }
+        
+        .progress-bar {
+            width: 200px;
+            height: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            overflow: hidden;
+            margin-left: 15px;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #4CAF50, #8BC34A);
+            transition: width 0.3s ease;
+            border-radius: 10px;
+        }
+        
         /* Tables styling */
         .table-section {
             margin-bottom: 40px;
@@ -167,9 +254,21 @@
             font-weight: bold;
         }
         
-        /* Sea requirement */
+        /* Sea requirement - clickable link */
         .sea {
             color: #FFC107;
+        }
+        
+        .sea-link {
+            color: #FFC107;
+            text-decoration: none;
+            transition: all 0.2s ease;
+            border-bottom: 1px solid transparent;
+        }
+        
+        .sea-link:hover {
+            border-bottom: 1px solid #FFC107;
+            text-shadow: 0 0 5px rgba(255, 193, 7, 0.5);
         }
         
         /* Trust level (quests) */
@@ -200,93 +299,6 @@
             width: 20px;
             height: 20px;
             border-radius: 3px;
-        }
-        
-        /* Calculator */
-        .calculator {
-            margin-top: 30px;
-            padding: 25px;
-            background: rgba(255, 193, 7, 0.1);
-            border: 2px solid #FFC107;
-            border-radius: 10px;
-        }
-        
-        .calculator h3 {
-            color: #FFC107;
-            margin-bottom: 15px;
-            text-align: center;
-        }
-        
-        .calc-input {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            margin-bottom: 15px;
-        }
-        
-        .calc-input label {
-            min-width: 250px;
-            font-weight: bold;
-        }
-        
-        .calc-input input, .calc-input select {
-            flex: 1;
-            padding: 10px;
-            border: none;
-            border-radius: 5px;
-            background: rgba(255, 255, 255, 0.9);
-            color: #333;
-            font-size: 1rem;
-        }
-        
-        .calc-result {
-            text-align: center;
-            font-size: 1.2rem;
-            font-weight: bold;
-            color: #4CAF50;
-            margin-top: 15px;
-            padding: 15px;
-            background: rgba(76, 175, 80, 0.2);
-            border-radius: 5px;
-        }
-        
-        .progress-display {
-            margin-top: 20px;
-            padding: 20px;
-            background: rgba(33, 150, 243, 0.1);
-            border: 2px solid #2196F3;
-            border-radius: 10px;
-        }
-        
-        .progress-item {
-            margin-bottom: 15px;
-            padding: 10px;
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 5px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        
-        .progress-item-left {
-            display: flex;
-            align-items: center;
-        }
-        
-        .progress-bar {
-            width: 200px;
-            height: 20px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 10px;
-            overflow: hidden;
-            margin-left: 15px;
-        }
-        
-        .progress-fill {
-            height: 100%;
-            background: linear-gradient(90deg, #4CAF50, #8BC34A);
-            transition: width 0.3s ease;
-            border-radius: 10px;
         }
         
         @media (max-width: 768px) {
@@ -321,6 +333,42 @@
             <div class="formula">Les quêtes = Le niveau de confiance nécessaire</div>
             <div class="example">Exemple : si la récompense est de 1700$, cela signifie qu'ils ont déjà accompli 7 quêtes. Ceci ne s'applique pas aux quêtes « Attraper un poisson commun/peu commun/rare/épique/mythique » et « Attraper n'importe quel poisson en 2 minutes », car leurs récompenses restent inchangées.</div>
             <div class="note">(notez que les quêtes ne s'appliquent pas au « système de vérification » supérieur qui compte également comme exigence de quête pour débloquer des appâts ou des cannes à pêche.) En bref, toutes les quêtes terminées comptent.</div>
+        </div>
+
+        <div class="calculator">
+            <h3>🧮 Calculateur d'XP de Quête</h3>
+            
+            <!-- Quest XP Calculator -->
+            <div style="padding: 20px; background: rgba(76, 175, 80, 0.1); border: 2px solid #4CAF50; border-radius: 8px;">
+                <h4 style="color: #4CAF50; margin-bottom: 15px; text-align: center;">Calculer l'XP de Quête</h4>
+                <div class="calc-input">
+                    <label for="quest-reward">Récompense de quête en argent ($) :</label>
+                    <input type="number" id="quest-reward" placeholder="Ex: 1700" min="1000">
+                </div>
+                <div class="calc-input">
+                    <label for="sea-select">Choisir votre mer actuelle :</label>
+                    <select id="sea-select">
+                        <option value="">-- Sélectionner une mer --</option>
+                        <option value="first">First Sea</option>
+                        <option value="second">Second Sea</option>
+                        <option value="third">Third Sea</option>
+                    </select>
+                </div>
+                <div style="text-align: center; font-size: 1rem; margin-bottom: 10px; color: #4CAF50;">
+                    Formule : (récompense - 1000) / 100
+                </div>
+                <div class="calc-result" id="xp-result">
+                    Entrez votre récompense de quête pour calculer les quêtes terminées
+                </div>
+                <div style="margin-top: 10px; font-size: 0.9rem; color: #ccc; text-align: center;">
+                    Ne s'applique pas aux quêtes "Attraper un poisson" et "Attraper n'importe quel poisson en 2 minutes" car leurs récompenses restent inchangées
+                </div>
+            </div>
+
+            <div class="progress-display" id="progress-display" style="display: none;">
+                <h4 style="color: #2196F3; margin-bottom: 15px; text-align: center;">Progrès par Mer</h4>
+                <div id="progress-items"></div>
+            </div>
         </div>
 
         <div class="table-section">
@@ -361,7 +409,9 @@
                                 </div>
                             </div>
                         </td>
-                        <td class="sea">First Sea</td>
+                        <td class="sea">
+                            <a href="https://blox-fruits.fandom.com/wiki/First_Sea" class="sea-link" target="_blank">First Sea</a>
+                        </td>
                         <td class="trust">10</td>
                     </tr>
                     <tr>
@@ -398,7 +448,9 @@
                                 </div>
                             </div>
                         </td>
-                        <td class="sea">Second Sea</td>
+                        <td class="sea">
+                            <a href="https://blox-fruits.fandom.com/wiki/Second_Sea" class="sea-link" target="_blank">Second Sea</a>
+                        </td>
                         <td class="trust">15</td>
                     </tr>
                     <tr>
@@ -435,7 +487,9 @@
                                 </div>
                             </div>
                         </td>
-                        <td class="sea">Third Sea</td>
+                        <td class="sea">
+                            <a href="https://blox-fruits.fandom.com/wiki/Third_Sea" class="sea-link" target="_blank">Third Sea</a>
+                        </td>
                         <td class="trust">50</td>
                     </tr>
                 </tbody>
@@ -467,7 +521,9 @@
                         <td class="uncommon">Uncommon</td>
                         <td>10</td>
                         <td class="price">12,000</td>
-                        <td class="sea">First Sea</td>
+                        <td class="sea">
+                            <a href="https://blox-fruits.fandom.com/wiki/First_Sea" class="sea-link" target="_blank">First Sea</a>
+                        </td>
                         <td class="trust">3</td>
                     </tr>
                     <tr>
@@ -480,7 +536,9 @@
                         <td class="uncommon">Uncommon</td>
                         <td>10</td>
                         <td class="price">8,000</td>
-                        <td class="sea">First Sea</td>
+                        <td class="sea">
+                            <a href="https://blox-fruits.fandom.com/wiki/First_Sea" class="sea-link" target="_blank">First Sea</a>
+                        </td>
                         <td class="trust">15</td>
                     </tr>
                     <tr>
@@ -503,7 +561,9 @@
                                 </div>
                             </div>
                         </td>
-                        <td class="sea">Second Sea</td>
+                        <td class="sea">
+                            <a href="https://blox-fruits.fandom.com/wiki/Second_Sea" class="sea-link" target="_blank">Second Sea</a>
+                        </td>
                         <td class="trust">10</td>
                     </tr>
                     <tr>
@@ -526,7 +586,9 @@
                                 </div>
                             </div>
                         </td>
-                        <td class="sea">Second Sea</td>
+                        <td class="sea">
+                            <a href="https://blox-fruits.fandom.com/wiki/Second_Sea" class="sea-link" target="_blank">Second Sea</a>
+                        </td>
                         <td class="trust">20</td>
                     </tr>
                     <tr>
@@ -549,7 +611,9 @@
                                 </div>
                             </div>
                         </td>
-                        <td class="sea">Third Sea</td>
+                        <td class="sea">
+                            <a href="https://blox-fruits.fandom.com/wiki/Third_Sea" class="sea-link" target="_blank">Third Sea</a>
+                        </td>
                         <td class="trust">10</td>
                     </tr>
                     <tr>
@@ -572,47 +636,13 @@
                                 </div>
                             </div>
                         </td>
-                        <td class="sea">Third Sea</td>
+                        <td class="sea">
+                            <a href="https://blox-fruits.fandom.com/wiki/Third_Sea" class="sea-link" target="_blank">Third Sea</a>
+                        </td>
                         <td class="trust">15</td>
                     </tr>
                 </tbody>
             </table>
-        </div>
-
-        <div class="calculator">
-            <h3>🧮 Calculateur d'XP de Quête</h3>
-            
-            <!-- Quest XP Calculator -->
-            <div style="padding: 20px; background: rgba(76, 175, 80, 0.1); border: 2px solid #4CAF50; border-radius: 8px;">
-                <h4 style="color: #4CAF50; margin-bottom: 15px; text-align: center;">Calculer l'XP de Quête</h4>
-                <div class="calc-input">
-                    <label for="quest-reward">Récompense de quête en argent ($) :</label>
-                    <input type="number" id="quest-reward" placeholder="Ex: 1700" min="1000">
-                </div>
-                <div class="calc-input">
-                    <label for="sea-select">Choisir votre mer actuelle :</label>
-                    <select id="sea-select">
-                        <option value="">-- Sélectionner une mer --</option>
-                        <option value="first">First Sea</option>
-                        <option value="second">Second Sea</option>
-                        <option value="third">Third Sea</option>
-                    </select>
-                </div>
-                <div style="text-align: center; font-size: 1rem; margin-bottom: 10px; color: #4CAF50;">
-                    Formule : (récompense - 1000) / 100
-                </div>
-                <div class="calc-result" id="xp-result">
-                    Entrez votre récompense de quête pour calculer les quêtes terminées
-                </div>
-                <div style="margin-top: 10px; font-size: 0.9rem; color: #ccc; text-align: center;">
-                    Ne s'applique pas aux quêtes "Attraper un poisson" et "Attraper n'importe quel poisson en 2 minutes" car leurs récompenses restent inchangées
-                </div>
-            </div>
-
-            <div class="progress-display" id="progress-display" style="display: none;">
-                <h4 style="color: #2196F3; margin-bottom: 15px; text-align: center;">Progrès par Mer</h4>
-                <div id="progress-items"></div>
-            </div>
         </div>
     </div>
 
